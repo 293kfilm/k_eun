@@ -33,13 +33,13 @@ git push -u origin main
 
 두 값을 메모장에 잠깐 복사해두세요.
 
-## STEP 3. Anthropic API Key 발급
+## STEP 3. Google Gemini API Key 발급 (무료)
 
-1. https://console.anthropic.com 접속 → 가입/로그인
-2. 좌측 **API Keys** → **Create Key**
-3. `sk-ant-...` 형태의 키 복사 (한 번만 보이니 꼭 저장)
-4. **Settings > Billing** 에서 최소 $5 정도 크레딧 충전 (신용카드 필요)
-   - 프롬프트 생성 1회당 대략 $0.01~0.03 수준이라 $5로 수백 번 쓸 수 있습니다
+1. https://aistudio.google.com/app/apikey 접속 → Google 계정으로 로그인
+2. **Create API key** 클릭 → 프로젝트 선택(없으면 자동 생성) → 키 발급
+3. 발급된 키 복사 (다시 볼 수 있지만, 안전한 곳에 저장해두세요)
+4. 신용카드 등록 불필요 — **무료 할당량**으로 개인 사용에는 충분합니다
+   - `gemini-2.5-flash` 모델 기준 분당/일일 요청 한도가 넉넉함
 
 ## STEP 4. Vercel 배포 (무료)
 
@@ -50,7 +50,7 @@ git push -u origin main
 
 | Key | Value |
 |-----|-------|
-| `ANTHROPIC_API_KEY` | `sk-ant-...` (STEP 3) |
+| `GOOGLE_API_KEY` | Gemini API 키 (STEP 3) |
 | `TURSO_DATABASE_URL` | `libsql://...` (STEP 2) |
 | `TURSO_AUTH_TOKEN` | 토큰 문자열 (STEP 2) |
 | `APP_USERNAME` | 원하는 아이디 (예: `admin`) |
@@ -109,9 +109,9 @@ git push -u origin main
 |--------|----------|---------|
 | **Vercel Hobby** | 100GB 대역폭/월 | 개인용은 초과할 일 거의 없음 |
 | **Turso** | 9GB 저장 / 10억 read/월 | 역시 개인용 충분 |
-| **Anthropic API** | 없음 (종량제) | $5 크레딧으로 수백 번 생성 |
+| **Google Gemini API** | 무료 할당량 (gemini-2.5-flash) | 개인 사용은 무료 범위 내 |
 
-총 월 비용: **Anthropic 사용량만큼만** (대부분 $1~5/월 수준)
+총 월 비용: **완전 무료** (Vercel/Turso/Gemini 모두 무료 한도 내 사용)
 
 ## 자동 재배포
 
@@ -125,7 +125,8 @@ git push -u origin main
 - Vercel 대시보드 > Settings > Environment Variables 확인 후 **Redeploy**
 
 **Q. 프롬프트 생성이 실패함**
-- `ANTHROPIC_API_KEY`가 올바른지, 크레딧이 남았는지 확인
+- `GOOGLE_API_KEY`가 올바른지 확인
+- Google AI Studio에서 키가 활성 상태인지, 일일 할당량을 넘지 않았는지 확인
 - Vercel 대시보드 > Logs에서 에러 확인
 
 **Q. DB가 안 보임**

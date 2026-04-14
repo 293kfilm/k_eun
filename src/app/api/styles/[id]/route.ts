@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { dbGet, dbRun } from '@/lib/db';
-import { callClaude } from '@/lib/claude';
+import { callAI } from '@/lib/gemini';
 import { buildStyleAnalysisPrompt } from '@/lib/prompts';
 
 export async function PUT(
@@ -20,7 +20,7 @@ export async function PUT(
   if (referencePrompts) {
     const promptText = referencePrompts.join('\n\n---\n\n');
     const rulesNote = rules ? `\n\nUser-specified rules:\n${rules}` : '';
-    styleSummary = await callClaude(buildStyleAnalysisPrompt(), promptText + rulesNote);
+    styleSummary = await callAI(buildStyleAnalysisPrompt(), promptText + rulesNote);
   }
 
   await dbRun(

@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { dbAll, dbRun } from '@/lib/db';
-import { callClaude } from '@/lib/claude';
+import { callAI } from '@/lib/gemini';
 import { scrapeUrl } from '@/lib/scraper';
 import { buildKnowledgeExtractionPrompt, buildKnowledgeMergePrompt } from '@/lib/prompts';
 import { getToolPreset } from '@/lib/presets';
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
 
     // Extract rules using Claude
     const extractionPrompt = buildKnowledgeExtractionPrompt(preset.name);
-    const extractedRulesRaw = await callClaude(extractionPrompt, content);
+    const extractedRulesRaw = await callAI(extractionPrompt, content);
 
     let extractedRules;
     try {
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     const allRules = allDocs.map((d) => d.extracted_rules).join('\n\n---\n\n');
 
     const mergePrompt = buildKnowledgeMergePrompt();
-    const mergedKnowledge = await callClaude(mergePrompt, allRules);
+    const mergedKnowledge = await callAI(mergePrompt, allRules);
 
     // Upsert tool_knowledge
     await dbRun(

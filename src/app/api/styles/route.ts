@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { dbAll, dbRun } from '@/lib/db';
-import { callClaude } from '@/lib/claude';
+import { callAI } from '@/lib/gemini';
 import { buildStyleAnalysisPrompt } from '@/lib/prompts';
 import { nanoid } from 'nanoid';
 
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const promptText = referencePrompts.join('\n\n---\n\n');
     const rulesNote = rules ? `\n\nUser-specified rules:\n${rules}` : '';
     const analysisPrompt = buildStyleAnalysisPrompt();
-    const styleSummary = await callClaude(analysisPrompt, promptText + rulesNote);
+    const styleSummary = await callAI(analysisPrompt, promptText + rulesNote);
 
     const id = nanoid();
 

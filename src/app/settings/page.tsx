@@ -15,14 +15,14 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const savedKey = localStorage.getItem('anthropic_api_key') || '';
+    const savedKey = localStorage.getItem('google_api_key') || '';
     const savedTool = localStorage.getItem('default_tool') || 'kling';
     setApiKey(savedKey);
     setDefaultTool(savedTool);
   }, []);
 
   const handleSave = () => {
-    localStorage.setItem('anthropic_api_key', apiKey);
+    localStorage.setItem('google_api_key', apiKey);
     localStorage.setItem('default_tool', defaultTool);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -44,11 +44,11 @@ export default function SettingsPage() {
       <Card className="p-5 space-y-4">
         <h2 className="text-lg font-semibold">API 설정</h2>
         <Input
-          label="Anthropic API Key"
+          label="Google Gemini API Key"
           type="password"
           value={apiKey}
           onChange={(e) => setApiKey(e.target.value)}
-          placeholder="sk-ant-..."
+          placeholder="AIza..."
         />
         <p className="text-xs text-text-tertiary">
           API Key는 브라우저 로컬 스토리지에 저장됩니다. 서버 환경변수(.env.local)에 설정하는 것을 권장합니다.

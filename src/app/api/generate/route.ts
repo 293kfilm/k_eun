@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { dbGet, dbRun } from '@/lib/db';
 import { getToolPreset } from '@/lib/presets';
-import { streamClaude } from '@/lib/claude';
+import { streamAI } from '@/lib/gemini';
 import { buildGenerateSystemPrompt, buildGenerateUserMessage } from '@/lib/prompts';
 import { nanoid } from 'nanoid';
 import type { GenerateRequest } from '@/types';
@@ -20,13 +20,11 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: `Unknown tool: ${toolId}` }, { status: 400 });
     }
 
-    // Get tool knowledge
     const toolKnowledge = await dbGet<{ knowledge_summary: string }>(
       'SELECT knowledge_summary FROM tool_knowledge WHERE tool_id = ?',
       [toolId]
     );
 
-    // Get style
     let styleSummary: string | null = null;
     if (styleId) {
       const style = await dbGet<{ style_summary: string }>(
@@ -43,21 +41,16 @@ export async function POST(request: NextRequest) {
     );
     const userMessage = buildGenerateUserMessage(cuts, globalParams);
 
-    const stream = await streamClaude(systemPrompt, userMessage);
-
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
         let fullText = '';
         try {
-          for await (const event of stream) {
-            if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
-              const text = event.delta.text;
-              fullText += text;
-              controller.enqueue(
-                encoder.encode(`data: ${JSON.stringify({ type: 'delta', text })}\n\n`)
-              );
-            }
+          for await (const text of streamAI(systemPrompt, userMessage)) {
+            fullText += text;
+            controller.enqueue(
+              encoder.encode(`data: ${JSON.stringify({ type: 'delta', text })}\n\n`)
+            );
           }
 
           let results;
