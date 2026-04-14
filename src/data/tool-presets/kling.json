@@ -1,0 +1,44 @@
+{
+  "id": "kling",
+  "name": "Kling AI",
+  "description": "Kling AI video generation - natural language descriptive prompts",
+  "promptOrder": ["subject", "action", "camera", "lighting", "style"],
+  "parameters": [
+    {
+      "key": "aspect_ratio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "options": ["16:9", "9:16", "1:1"],
+      "default": "16:9"
+    },
+    {
+      "key": "duration",
+      "label": "Duration",
+      "type": "select",
+      "options": ["5s", "10s"],
+      "default": "5s"
+    },
+    {
+      "key": "mode",
+      "label": "Mode",
+      "type": "select",
+      "options": ["standard", "pro", "master"],
+      "default": "pro"
+    },
+    {
+      "key": "camera_movement",
+      "label": "Camera Movement",
+      "type": "select",
+      "options": ["none", "pan_left", "pan_right", "tilt_up", "tilt_down", "zoom_in", "zoom_out", "dolly", "orbit"],
+      "default": "none"
+    }
+  ],
+  "negativePromptSupport": true,
+  "maxPromptLength": 500,
+  "examplePrompts": [
+    "A woman walks through a neon-lit alley at night. Camera slowly dollies forward. Cinematic lighting, shallow depth of field, film grain.",
+    "Golden hour aerial shot of a winding river through autumn forest. Slow orbit. Warm color grading, volumetric light rays.",
+    "Close-up of raindrops hitting a window, blurred city lights in background. Static camera. Moody blue tones, soft bokeh."
+  ],
+  "knowledgeBase": ""
+}

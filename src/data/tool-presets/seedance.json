@@ -1,0 +1,37 @@
+{
+  "id": "seedance",
+  "name": "Seedance",
+  "description": "ByteDance Seedance - detailed motion descriptions for best results",
+  "promptOrder": ["subject", "action", "environment", "style", "mood"],
+  "parameters": [
+    {
+      "key": "resolution",
+      "label": "Resolution",
+      "type": "select",
+      "options": ["720p", "1080p"],
+      "default": "1080p"
+    },
+    {
+      "key": "duration",
+      "label": "Duration",
+      "type": "select",
+      "options": ["5s", "10s"],
+      "default": "5s"
+    },
+    {
+      "key": "style_preset",
+      "label": "Style Preset",
+      "type": "select",
+      "options": ["cinematic", "anime", "realistic", "3d_render"],
+      "default": "cinematic"
+    }
+  ],
+  "negativePromptSupport": true,
+  "maxPromptLength": 500,
+  "examplePrompts": [
+    "A young man in a leather jacket turns around slowly, wind blowing his hair. Urban rooftop at sunset. Warm golden hour tones, anamorphic lens flare.",
+    "A cat jumps gracefully from one shelf to another, knocking over a small plant. Cozy living room with warm lighting. Photorealistic, 35mm film look.",
+    "Waves crash against jagged rocks in slow motion, mist rising into the air. Dramatic coastal cliff at dawn. Epic wide angle, desaturated teal and orange."
+  ],
+  "knowledgeBase": ""
+}
