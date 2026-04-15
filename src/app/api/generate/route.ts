@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { dbGet, dbRun } from '@/lib/db';
 import { getToolPreset } from '@/lib/presets';
 import { getBuiltinKnowledge } from '@/lib/builtinKnowledge';
+import { getStylePreset } from '@/data/stylePresets';
 import { streamAI } from '@/lib/gemini';
 import { buildGenerateSystemPrompt, buildGenerateUserMessage } from '@/lib/prompts';
 import { nanoid } from 'nanoid';
@@ -34,13 +35,21 @@ export async function POST(request: NextRequest) {
       getBuiltinKnowledge(toolId) ||
       null;
 
+    // Style ids prefixed with `preset:` resolve to the bundled cinematic style
+    // presets (e.g. `preset:noir-classic`); anything else is a user-trained
+    // style stored in the `styles` table.
     let styleSummary: string | null = null;
     if (styleId) {
-      const style = await dbGet<{ style_summary: string }>(
-        'SELECT style_summary FROM styles WHERE id = ?',
-        [styleId]
-      );
-      styleSummary = style?.style_summary ?? null;
+      if (styleId.startsWith('preset:')) {
+        const preset = getStylePreset(styleId.slice('preset:'.length));
+        styleSummary = preset?.styleSummary ?? null;
+      } else {
+        const style = await dbGet<{ style_summary: string }>(
+          'SELECT style_summary FROM styles WHERE id = ?',
+          [styleId]
+        );
+        styleSummary = style?.style_summary ?? null;
+      }
     }
 
     const systemPrompt = buildGenerateSystemPrompt(
