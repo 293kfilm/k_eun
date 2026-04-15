@@ -12,11 +12,21 @@ import { getAllToolPresets } from '@/lib/presets';
 
 const TOOLS = getAllToolPresets().map((p) => ({ id: p.id, name: p.name }));
 
+interface BuiltinBreakdown {
+  toolGuide: { available: boolean; length: number; content: string | null };
+  shared: { available: boolean; length: number };
+  trending: { available: boolean; length: number };
+  totalLength: number;
+}
+
 interface ToolData {
   documents: KnowledgeDocument[];
   knowledge: ToolKnowledge | null;
-  builtin?: { available: boolean; length: number };
+  builtin?: BuiltinBreakdown;
 }
+
+const formatKB = (bytes: number) =>
+  bytes >= 1024 ? `${(bytes / 1024).toFixed(1)} KB` : `${bytes} B`;
 
 export default function ToolKnowledgePage() {
   const [toolData, setToolData] = useState<Record<string, ToolData>>({});
@@ -28,6 +38,7 @@ export default function ToolKnowledgePage() {
   const [textContent, setTextContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [previewToolId, setPreviewToolId] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     for (const tool of TOOLS) {
@@ -98,38 +109,72 @@ export default function ToolKnowledgePage() {
       <div>
         <h1 className="text-2xl font-bold">Tool Knowledge Base</h1>
         <p className="text-sm text-text-secondary mt-1">
-          AI 영상 툴의 프롬프트 가이드 문서를 학습시켜 생성 품질을 높입니다
+          모든 툴은 <span className="text-accent">내장된 공식 프롬프트 가이드 + 공통 사전제작 템플릿 + 2026 트렌딩 패턴</span>을
+          기본으로 사용합니다. 추가로 자체 문서를 업로드해 가이드를 보강할 수 있습니다.
         </p>
       </div>
 
       {TOOLS.map((tool) => {
         const data = toolData[tool.id];
         const docCount = data?.documents?.length || 0;
+        const builtin = data?.builtin;
+        const isPreviewing = previewToolId === tool.id;
 
         return (
           <Card key={tool.id} className="p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="flex-1 min-w-0">
                 <h2 className="text-lg font-semibold">{tool.name}</h2>
-                <div className="flex items-center gap-2 mt-1">
-                  <p className="text-xs text-text-tertiary">학습된 문서: {docCount}개</p>
-                  {data?.builtin?.available && (
-                    <span className="text-[10px] uppercase tracking-wider bg-accent-subtle text-accent px-1.5 py-0.5 rounded">
-                      내장 가이드 활성
+                <div className="flex items-center flex-wrap gap-1.5 mt-2">
+                  {builtin?.toolGuide.available && (
+                    <span className="text-[10px] uppercase tracking-wider bg-success/15 text-success px-1.5 py-0.5 rounded font-medium">
+                      ✓ 공식 가이드 ({formatKB(builtin.toolGuide.length)})
                     </span>
                   )}
+                  {builtin?.shared.available && (
+                    <span className="text-[10px] uppercase tracking-wider bg-accent-subtle text-accent px-1.5 py-0.5 rounded">
+                      ✓ 공통 템플릿
+                    </span>
+                  )}
+                  {builtin?.trending.available && (
+                    <span className="text-[10px] uppercase tracking-wider bg-accent-subtle text-accent px-1.5 py-0.5 rounded">
+                      ✓ 트렌딩 패턴
+                    </span>
+                  )}
+                  <span className="text-xs text-text-tertiary ml-1">
+                    내 추가 문서: {docCount}개
+                  </span>
                 </div>
               </div>
-              <Button
-                size="sm"
-                onClick={() => {
-                  setSelectedTool(tool.id);
-                  setShowModal(true);
-                }}
-              >
-                + 문서 추가
-              </Button>
+              <div className="flex items-center gap-2 shrink-0">
+                {builtin?.toolGuide.content && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                      setPreviewToolId(isPreviewing ? null : tool.id)
+                    }
+                  >
+                    {isPreviewing ? '가이드 접기' : '내장 가이드 보기'}
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setSelectedTool(tool.id);
+                    setShowModal(true);
+                  }}
+                >
+                  + 문서 추가
+                </Button>
+              </div>
             </div>
+
+            {isPreviewing && builtin?.toolGuide.content && (
+              <div className="bg-bg-tertiary rounded-lg p-3 text-xs text-text-secondary whitespace-pre-wrap max-h-[400px] overflow-y-auto font-mono leading-relaxed border-l-2 border-accent/40">
+                {builtin.toolGuide.content}
+              </div>
+            )}
 
             {data?.documents?.length > 0 && (
               <div className="space-y-2">

@@ -52,3 +52,37 @@ export function getBuiltinKnowledge(toolId: string): string | null {
   }
   return sections.join('\n\n---\n\n');
 }
+
+export interface BuiltinKnowledgeBreakdown {
+  toolGuide: { available: boolean; length: number; content: string | null };
+  shared: { available: boolean; length: number };
+  trending: { available: boolean; length: number };
+  totalLength: number;
+}
+
+/**
+ * Returns a structured breakdown of which built-in guides are loaded for a
+ * given tool. Used by the Tool Knowledge UI to show users that the system
+ * already ships with curated knowledge even when they haven't uploaded any
+ * documents themselves. Includes the full tool-specific markdown content so
+ * the UI can render a preview on demand.
+ */
+export function getBuiltinKnowledgeBreakdown(
+  toolId: string,
+): BuiltinKnowledgeBreakdown {
+  const toolGuide = /[^a-z0-9_-]/i.test(toolId) ? null : readGuide(`${toolId}.md`);
+  const shared = readGuide(SHARED_FILENAME);
+  const trending = readGuide(TRENDING_FILENAME);
+
+  return {
+    toolGuide: {
+      available: !!toolGuide,
+      length: toolGuide?.length ?? 0,
+      content: toolGuide,
+    },
+    shared: { available: !!shared, length: shared?.length ?? 0 },
+    trending: { available: !!trending, length: trending?.length ?? 0 },
+    totalLength:
+      (toolGuide?.length ?? 0) + (shared?.length ?? 0) + (trending?.length ?? 0),
+  };
+}
