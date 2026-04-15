@@ -1,0 +1,44 @@
+{
+  "id": "sora2",
+  "name": "Sora 2",
+  "description": "OpenAI Sora 2 - cinematographer brief style, structured sections, 4s x 2 stitching often beats 8s",
+  "promptOrder": ["subject", "action", "camera", "lighting", "audio", "dialogue"],
+  "parameters": [
+    {
+      "key": "model",
+      "label": "Model",
+      "type": "select",
+      "options": ["sora-2", "sora-2-pro"],
+      "default": "sora-2"
+    },
+    {
+      "key": "duration",
+      "label": "Duration (seconds)",
+      "type": "select",
+      "options": ["4", "8", "12", "16", "20"],
+      "default": "4"
+    },
+    {
+      "key": "aspect_ratio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "options": ["16:9", "9:16"],
+      "default": "16:9"
+    },
+    {
+      "key": "dof",
+      "label": "Depth of Field",
+      "type": "select",
+      "options": ["shallow", "deep"],
+      "default": "shallow"
+    }
+  ],
+  "negativePromptSupport": false,
+  "maxPromptLength": 1200,
+  "examplePrompts": [
+    "Wide establishing shot, eye level. Cyclist pedals three times, brakes, stops at crosswalk. Wet asphalt, zebra crosswalk, neon reflections in puddles. Soft window light with warm lamp fill. Distant traffic hiss.",
+    "Medium close-up, slight angle from behind. Actor takes four steps to window, pauses, pulls curtain in final second. 1970s film aesthetic, shallow focus, amber and walnut brown palette. Crisp snap of curtain rings.",
+    "Aerial wide shot, slight downward angle. Runner crosses sand dunes at golden hour, long shadow trailing behind, one continuous action. IMAX-scale scene. Distant wind and footsteps on sand."
+  ],
+  "knowledgeBase": ""
+}

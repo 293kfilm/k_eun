@@ -1,0 +1,44 @@
+{
+  "id": "luma",
+  "name": "Luma Ray3",
+  "description": "Luma Ray3 - reasoning model; natural language works; Draft Mode for iteration, Master for final 4K HDR",
+  "promptOrder": ["scene", "character", "action", "camera", "style"],
+  "parameters": [
+    {
+      "key": "mode",
+      "label": "Mode",
+      "type": "select",
+      "options": ["reasoning", "draft", "master"],
+      "default": "reasoning"
+    },
+    {
+      "key": "duration",
+      "label": "Duration",
+      "type": "select",
+      "options": ["5s", "10s"],
+      "default": "5s"
+    },
+    {
+      "key": "resolution",
+      "label": "Resolution",
+      "type": "select",
+      "options": ["720p", "1080p", "4k_hdr"],
+      "default": "1080p"
+    },
+    {
+      "key": "style_preset",
+      "label": "Style",
+      "type": "select",
+      "options": ["photorealistic", "anime", "cel_shaded", "pixar_3d", "flat_2d"],
+      "default": "photorealistic"
+    }
+  ],
+  "negativePromptSupport": false,
+  "maxPromptLength": 800,
+  "examplePrompts": [
+    "A woman stands alone on a rainy train platform at night. She lights a cigarette, the flame briefly illuminating her tired eyes. She exhales slowly as a train rushes past in the background. Dramatic rim lighting from the train's headlights. Shallow depth of field, 35mm film aesthetic.",
+    "The character enters the room, pauses at the doorway, then walks to the window and opens the curtains. Soft morning light floods in. Cinematic composition, photorealistic.",
+    "Studio Ghibli style, a cat chases a paper airplane through a sun-drenched meadow, camera follows at ground level, gentle breeze rustling tall grass, painterly watercolor aesthetic."
+  ],
+  "knowledgeBase": ""
+}

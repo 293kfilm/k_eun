@@ -7,12 +7,9 @@ import { Modal } from '@/components/ui/Modal';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import type { Style } from '@/types';
+import { getToolOptions } from '@/lib/presets';
 
-const TOOLS = [
-  { value: '', label: '툴 무관' },
-  { value: 'kling', label: 'Kling AI' },
-  { value: 'seedance', label: 'Seedance' },
-];
+const TOOLS = [{ value: '', label: '툴 무관' }, ...getToolOptions()];
 
 export default function StylesPage() {
   const [styles, setStyles] = useState<Style[]>([]);

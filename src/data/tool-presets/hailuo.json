@@ -1,0 +1,37 @@
+{
+  "id": "hailuo",
+  "name": "Hailuo (MiniMax)",
+  "description": "Hailuo 2.3 - [Camera+Motion] + [Subject] + [Action] + [Scene] + [Lighting] + [Style] formula",
+  "promptOrder": ["camera", "subject", "action", "scene", "lighting", "style"],
+  "parameters": [
+    {
+      "key": "version",
+      "label": "Version",
+      "type": "select",
+      "options": ["hailuo-2.3", "hailuo-2.0"],
+      "default": "hailuo-2.3"
+    },
+    {
+      "key": "duration",
+      "label": "Duration",
+      "type": "select",
+      "options": ["6s", "10s"],
+      "default": "6s"
+    },
+    {
+      "key": "style_preset",
+      "label": "Style",
+      "type": "select",
+      "options": ["cinematic", "anime", "illustration", "ink_wash", "game_cg", "realistic"],
+      "default": "cinematic"
+    }
+  ],
+  "negativePromptSupport": true,
+  "maxPromptLength": 500,
+  "examplePrompts": [
+    "Wide shot, camera follows runner through park dodging trees, jumping puddles, clear skies, bright natural lighting, documentary style.",
+    "Medium shot, man in red jacket walking city street, camera tracks from side, bustling crowd background, soft daylight, cinematic mood.",
+    "Close-up rotating product on white background with slow zoom, subtle shadows, neutral lighting highlighting details, commercial photography style."
+  ],
+  "knowledgeBase": ""
+}

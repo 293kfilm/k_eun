@@ -1,0 +1,37 @@
+{
+  "id": "pika",
+  "name": "Pika 2.5",
+  "description": "Pika 2.5 - Subject + Action + Setting + Camera; restrained adjectives; 5-10s clips; Pikaframes for transitions",
+  "promptOrder": ["subject", "action", "setting", "camera", "style"],
+  "parameters": [
+    {
+      "key": "duration",
+      "label": "Duration",
+      "type": "select",
+      "options": ["5s", "10s"],
+      "default": "5s"
+    },
+    {
+      "key": "resolution",
+      "label": "Resolution",
+      "type": "select",
+      "options": ["720p", "1080p"],
+      "default": "1080p"
+    },
+    {
+      "key": "aspect_ratio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "options": ["16:9", "9:16", "1:1", "4:5", "5:4", "3:2", "2:3"],
+      "default": "16:9"
+    }
+  ],
+  "negativePromptSupport": true,
+  "maxPromptLength": 300,
+  "examplePrompts": [
+    "A golden retriever wearing sunglasses, walking through Times Square at night, neon reflections on the sidewalk, cinematic slow zoom.",
+    "POV of a bird flying over the ocean at dusk with long shadows, wind rushing past, dynamic motion.",
+    "Cartoon chef flipping pancakes in bright kitchen, overhead shot, warm morning light, playful mood."
+  ],
+  "knowledgeBase": ""
+}

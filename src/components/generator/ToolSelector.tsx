@@ -4,11 +4,9 @@ import { useGeneratorStore } from '@/store/useGeneratorStore';
 import { Select } from '@/components/ui/Select';
 import { useEffect, useState } from 'react';
 import type { Style } from '@/types';
+import { getToolOptions } from '@/lib/presets';
 
-const TOOLS = [
-  { value: 'kling', label: 'Kling AI' },
-  { value: 'seedance', label: 'Seedance' },
-];
+const TOOLS = getToolOptions();
 
 export function ToolSelector() {
   const { toolId, setToolId, styleId, setStyleId } = useGeneratorStore();

@@ -8,11 +8,9 @@ import { Tabs } from '@/components/ui/Tabs';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import type { KnowledgeDocument, ToolKnowledge } from '@/types';
+import { getAllToolPresets } from '@/lib/presets';
 
-const TOOLS = [
-  { id: 'kling', name: 'Kling AI' },
-  { id: 'seedance', name: 'Seedance' },
-];
+const TOOLS = getAllToolPresets().map((p) => ({ id: p.id, name: p.name }));
 
 interface ToolData {
   documents: KnowledgeDocument[];

@@ -1,0 +1,37 @@
+{
+  "id": "runway",
+  "name": "Runway Gen-4",
+  "description": "Runway Gen-4 - complete sentences, physical not conceptual, NO negative language, one primary action",
+  "promptOrder": ["subject_motion", "scene_motion", "camera", "style"],
+  "parameters": [
+    {
+      "key": "duration",
+      "label": "Duration",
+      "type": "select",
+      "options": ["5s", "10s"],
+      "default": "5s"
+    },
+    {
+      "key": "aspect_ratio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "options": ["16:9", "9:16", "1:1"],
+      "default": "16:9"
+    },
+    {
+      "key": "camera_move",
+      "label": "Camera Movement",
+      "type": "select",
+      "options": ["tracking", "panning", "tilting", "dolly", "handheld", "static"],
+      "default": "tracking"
+    }
+  ],
+  "negativePromptSupport": false,
+  "maxPromptLength": 400,
+  "examplePrompts": [
+    "The protagonist sprints down the narrow alley, dodging crates and leaping over a low wall, while the camera tracks from behind.",
+    "The couple embraces under a blooming cherry tree, petals drifting softly around them. The camera slowly tilts up to capture the sunset glow.",
+    "The camera pans slowly across a vast savanna, capturing a herd of elephants moving gracefully. Dust rises with each step, and birds scatter as they pass."
+  ],
+  "knowledgeBase": ""
+}

@@ -1,0 +1,37 @@
+{
+  "id": "higgsfield",
+  "name": "Higgsfield",
+  "description": "Higgsfield - layered prompts: image/identity/motion separated, short direct commands",
+  "promptOrder": ["camera", "subject", "action", "environment", "lighting", "style"],
+  "parameters": [
+    {
+      "key": "workflow",
+      "label": "Workflow",
+      "type": "select",
+      "options": ["popcorn_image", "veo_motion", "sora_motion", "seedream_identity", "recast"],
+      "default": "veo_motion"
+    },
+    {
+      "key": "lens",
+      "label": "Lens",
+      "type": "select",
+      "options": ["24mm", "35mm", "50mm", "75mm"],
+      "default": "35mm"
+    },
+    {
+      "key": "camera_motion",
+      "label": "Camera Motion",
+      "type": "select",
+      "options": ["static", "dolly_in", "dolly_out", "orbit", "handheld", "fpv", "crash_zoom"],
+      "default": "static"
+    }
+  ],
+  "negativePromptSupport": false,
+  "maxPromptLength": 400,
+  "examplePrompts": [
+    "Medium close-up of tired detective. Eye-level framing centered on face. Soft streetlight from left with rain reflections. Dark alley with wet pavement and neon signs. 50mm lens with shallow depth of field and film grain. Moody and tense.",
+    "Camera dolly in slowly, woman turns her head toward window. Warm afternoon light through lace curtains. Shallow depth of field. Emotional and nostalgic.",
+    "Handheld shoulder-cam follows subject walking through crowded market. 35mm lens, natural documentary style, organic movement with subtle shake."
+  ],
+  "knowledgeBase": ""
+}

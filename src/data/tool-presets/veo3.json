@@ -1,0 +1,44 @@
+{
+  "id": "veo3",
+  "name": "Veo 3",
+  "description": "Google Veo 3 - 50-200 words, 4 elements (Subject/Context/Action/Mood), native audio supported",
+  "promptOrder": ["subject", "context", "action", "camera", "lighting", "style", "audio"],
+  "parameters": [
+    {
+      "key": "duration",
+      "label": "Duration",
+      "type": "select",
+      "options": ["4s", "8s"],
+      "default": "8s"
+    },
+    {
+      "key": "aspect_ratio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "options": ["16:9", "9:16", "1:1"],
+      "default": "16:9"
+    },
+    {
+      "key": "audio",
+      "label": "Native Audio",
+      "type": "select",
+      "options": ["on", "off"],
+      "default": "on"
+    },
+    {
+      "key": "shot_type",
+      "label": "Shot Type",
+      "type": "select",
+      "options": ["establishing", "medium", "close_up", "aerial", "handheld", "tracking", "push_in"],
+      "default": "medium"
+    }
+  ],
+  "negativePromptSupport": false,
+  "maxPromptLength": 1500,
+  "examplePrompts": [
+    "A waterfall cascading down moss-covered rocks in a temperate rainforest, dappled sunlight filtering through the canopy, slow push-in shot from medium distance, green ferns in foreground, misty atmospheric depth, cinematic nature documentary style, sound of rushing water and distant bird calls.",
+    "An empty cobblestone street in a European old town at blue hour, warm window light from cafés reflecting in wet stones, slowly moving handheld tracking shot at street level, intimate and atmospheric, cinematic European film style, quiet ambient night sounds with distant music.",
+    "A premium leather wallet on marble surface in minimal home office, natural afternoon light from large window creating soft shadows, close-up shot slowly revealing product from angle, clean modern aesthetic with shallow depth of field, commercial photography style, quiet ambient room atmosphere."
+  ],
+  "knowledgeBase": ""
+}
