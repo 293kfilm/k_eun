@@ -1,0 +1,69 @@
+{
+  "id": "freepik",
+  "name": "Freepik AI",
+  "description": "Freepik AI Suite - 36+ video models (Kling/Veo/Sora 2/MiniMax/Runway/Seedance/Wan/PixVerse/LTX) and 39+ image models (Mystic/Flux/Imagen/Nano Banana) in one platform. Pick the underlying model below.",
+  "promptOrder": ["subject", "action", "environment", "camera", "lighting", "style", "audio"],
+  "parameters": [
+    {
+      "key": "version",
+      "label": "Underlying Model",
+      "type": "select",
+      "options": [
+        "Mystic (image)",
+        "Flux 2 Pro (image)",
+        "Flux 1.1 Pro (image)",
+        "Imagen 4 (image)",
+        "Nano Banana Pro (image)",
+        "Kling 3.0 (video)",
+        "Kling 2.1 Master (video)",
+        "Veo 3.1 (video)",
+        "Veo 3 (video)",
+        "Sora 2 (video)",
+        "MiniMax Hailuo 02 (video)",
+        "Runway Gen-4.5 (video)",
+        "Runway Gen-4 (video)",
+        "Seedance 2.0 (video)",
+        "Wan 2.6 (video)",
+        "PixVerse 5.5 (video)",
+        "LTX 2 (video)"
+      ],
+      "default": "Kling 3.0 (video)"
+    },
+    {
+      "key": "mode",
+      "label": "Generation Mode",
+      "type": "select",
+      "options": ["text-to-video", "image-to-video", "text-to-image"],
+      "default": "text-to-video"
+    },
+    {
+      "key": "aspect_ratio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "options": ["16:9", "9:16", "1:1", "4:5", "21:9"],
+      "default": "16:9"
+    },
+    {
+      "key": "duration",
+      "label": "Duration",
+      "type": "select",
+      "options": ["5s", "8s", "10s", "15s"],
+      "default": "5s"
+    },
+    {
+      "key": "resolution",
+      "label": "Resolution",
+      "type": "select",
+      "options": ["720p", "1080p", "2K", "4K"],
+      "default": "1080p"
+    }
+  ],
+  "negativePromptSupport": true,
+  "maxPromptLength": 800,
+  "examplePrompts": [
+    "Cinematic medium shot of a young woman in a beige trench coat walking through a Seoul night market, neon signs reflecting in puddles, slow tracking shot from the side, shallow depth of field, soft warm and teal color grading, 35mm film aesthetic, ambient market chatter and distant rain.",
+    "Photorealistic close-up of a steaming ceramic teacup on a wooden table beside an open novel, golden afternoon window light, slow push-in, soft bokeh in background, calm intimate mood, natural color palette, faint sound of pages turning.",
+    "Wide aerial shot of a winding mountain road through autumn forest at golden hour, slow orbit revealing distant peaks, cinematic warm color grading, volumetric light rays through trees, epic adventure film tone, gentle wind and distant bird calls."
+  ],
+  "knowledgeBase": ""
+}

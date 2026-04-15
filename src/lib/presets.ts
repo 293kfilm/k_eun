@@ -8,6 +8,7 @@ import runwayPreset from '@/data/tool-presets/runway.json';
 import hailuoPreset from '@/data/tool-presets/hailuo.json';
 import pikaPreset from '@/data/tool-presets/pika.json';
 import lumaPreset from '@/data/tool-presets/luma.json';
+import freepikPreset from '@/data/tool-presets/freepik.json';
 
 const presets: Record<string, ToolPreset> = {
   kling: klingPreset as ToolPreset,
@@ -19,6 +20,7 @@ const presets: Record<string, ToolPreset> = {
   hailuo: hailuoPreset as ToolPreset,
   pika: pikaPreset as ToolPreset,
   luma: lumaPreset as ToolPreset,
+  freepik: freepikPreset as ToolPreset,
 };
 
 export function getToolPreset(toolId: string): ToolPreset | undefined {
