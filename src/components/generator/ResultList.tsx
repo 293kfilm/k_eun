@@ -3,6 +3,7 @@
 import { useGeneratorStore } from '@/store/useGeneratorStore';
 import { Button } from '@/components/ui/Button';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { TranslateBlock } from '@/components/ui/TranslateBlock';
 import { useState } from 'react';
 
 function copyToClipboard(text: string) {
@@ -108,6 +109,7 @@ export function ResultList() {
             style={{ fontFamily: 'var(--font-mono), monospace' }}
             rows={3}
           />
+          <TranslateBlock text={result.prompt} />
           {result.negativePrompt && (
             <div>
               <label className="text-xs text-text-tertiary mb-1 block">Negative Prompt</label>

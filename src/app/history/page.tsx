@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { TranslateBlock } from '@/components/ui/TranslateBlock';
 import type { HistoryEntry } from '@/types';
 
 export default function HistoryPage() {
@@ -122,6 +123,7 @@ export default function HistoryPage() {
                           >
                             {result.prompt}
                           </div>
+                          <TranslateBlock text={result.prompt} className="mt-2" />
                           {result.negativePrompt && (
                             <div className="text-xs text-text-tertiary mt-1">
                               Negative: {result.negativePrompt}

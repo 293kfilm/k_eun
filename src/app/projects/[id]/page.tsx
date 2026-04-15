@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { use } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { TranslateBlock } from '@/components/ui/TranslateBlock';
 import Link from 'next/link';
 
 interface CutData {
@@ -109,6 +110,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {cut.generated_prompt}
                 </div>
               )}
+              {cut.generated_prompt && <TranslateBlock text={cut.generated_prompt} />}
               {cut.negative_prompt && (
                 <div className="text-xs text-text-tertiary">
                   <span className="font-medium">Negative:</span> {cut.negative_prompt}
