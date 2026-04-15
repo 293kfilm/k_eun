@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { dbAll, dbGet, dbRun } from '@/lib/db';
+import { getBuiltinKnowledge } from '@/lib/builtinKnowledge';
 
 export async function GET(
   _request: NextRequest,
@@ -13,8 +14,15 @@ export async function GET(
   );
 
   const knowledge = await dbGet('SELECT * FROM tool_knowledge WHERE tool_id = ?', [toolId]);
+  const builtin = getBuiltinKnowledge(toolId);
 
-  return Response.json({ documents, knowledge: knowledge ?? null });
+  return Response.json({
+    documents,
+    knowledge: knowledge ?? null,
+    builtin: builtin
+      ? { available: true, length: builtin.length }
+      : { available: false, length: 0 },
+  });
 }
 
 export async function DELETE(

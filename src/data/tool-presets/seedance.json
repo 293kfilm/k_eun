@@ -5,6 +5,13 @@
   "promptOrder": ["subject", "action", "environment", "style", "mood"],
   "parameters": [
     {
+      "key": "version",
+      "label": "Model Version",
+      "type": "select",
+      "options": ["Seedance 1.0 Lite", "Seedance 1.0 Pro", "Seedance 2.0"],
+      "default": "Seedance 2.0"
+    },
+    {
       "key": "resolution",
       "label": "Resolution",
       "type": "select",

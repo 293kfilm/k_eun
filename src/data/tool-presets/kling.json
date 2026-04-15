@@ -5,6 +5,13 @@
   "promptOrder": ["subject", "action", "camera", "lighting", "style"],
   "parameters": [
     {
+      "key": "version",
+      "label": "Model Version",
+      "type": "select",
+      "options": ["Kling 1.6", "Kling 2.0", "Kling 2.1 Master", "Kling 2.5 Turbo Pro", "Kling 2.6 Pro", "Kling 3.0"],
+      "default": "Kling 3.0"
+    },
+    {
       "key": "aspect_ratio",
       "label": "Aspect Ratio",
       "type": "select",

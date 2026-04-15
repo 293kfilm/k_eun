@@ -6,10 +6,10 @@
   "parameters": [
     {
       "key": "version",
-      "label": "Version",
+      "label": "Model Version",
       "type": "select",
-      "options": ["hailuo-2.3", "hailuo-2.0"],
-      "default": "hailuo-2.3"
+      "options": ["Hailuo 01 Director", "Hailuo 02", "Hailuo 2.3"],
+      "default": "Hailuo 2.3"
     },
     {
       "key": "duration",

@@ -5,11 +5,11 @@
   "promptOrder": ["subject", "action", "camera", "lighting", "audio", "dialogue"],
   "parameters": [
     {
-      "key": "model",
-      "label": "Model",
+      "key": "version",
+      "label": "Model Version",
       "type": "select",
-      "options": ["sora-2", "sora-2-pro"],
-      "default": "sora-2"
+      "options": ["Sora 1", "sora-2", "sora-2-pro"],
+      "default": "sora-2-pro"
     },
     {
       "key": "duration",

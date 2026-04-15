@@ -5,6 +5,13 @@
   "promptOrder": ["subject_motion", "scene_motion", "camera", "style"],
   "parameters": [
     {
+      "key": "version",
+      "label": "Model Version",
+      "type": "select",
+      "options": ["Gen-3 Alpha", "Gen-3 Alpha Turbo", "Gen-4"],
+      "default": "Gen-4"
+    },
+    {
       "key": "duration",
       "label": "Duration",
       "type": "select",

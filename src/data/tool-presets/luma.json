@@ -5,6 +5,13 @@
   "promptOrder": ["scene", "character", "action", "camera", "style"],
   "parameters": [
     {
+      "key": "version",
+      "label": "Model Version",
+      "type": "select",
+      "options": ["Ray 2", "Ray 3", "Ray 3.14"],
+      "default": "Ray 3.14"
+    },
+    {
       "key": "mode",
       "label": "Mode",
       "type": "select",

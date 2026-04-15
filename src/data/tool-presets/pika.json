@@ -5,6 +5,13 @@
   "promptOrder": ["subject", "action", "setting", "camera", "style"],
   "parameters": [
     {
+      "key": "version",
+      "label": "Model Version",
+      "type": "select",
+      "options": ["Pika 1.5", "Pika 2.0", "Pika 2.2", "Pika 2.5"],
+      "default": "Pika 2.5"
+    },
+    {
       "key": "duration",
       "label": "Duration",
       "type": "select",

@@ -3,19 +3,28 @@ import type { ToolPreset, CutInput } from '@/types';
 export function buildGenerateSystemPrompt(
   toolPreset: ToolPreset,
   knowledgeSummary: string | null,
-  styleSummary: string | null
+  styleSummary: string | null,
+  globalParams?: Record<string, string | number>
 ): string {
   const toolKnowledgeSection = knowledgeSummary
-    ? `## Tool Knowledge (from learned documents):\n${knowledgeSummary}`
-    : '## Tool Knowledge:\nNo tool-specific knowledge learned yet. Use general best practices.';
+    ? `## Tool Knowledge (latest official prompt guide):\n${knowledgeSummary}`
+    : '## Tool Knowledge:\nNo tool-specific knowledge available. Use general best practices.';
 
   const styleSection = styleSummary
     ? `## User\'s style guide:\n${styleSummary}`
     : '## User\'s style guide:\nNo specific style selected. Use cinematic, professional defaults.';
 
+  const targetVersion = globalParams?.version ? String(globalParams.version) : null;
+  const versionSection = targetVersion
+    ? `## Target Model Version: ${targetVersion}
+The user has selected ${targetVersion} specifically. Locate the section of the Tool Knowledge that covers this version (or the closest one) and prioritize its conventions, supported features, and length recommendations. If the chosen version lacks a feature mentioned in the knowledge (e.g. native audio, dialogue, multi-shot), DO NOT use that feature in the generated prompt.`
+    : '';
+
   return `You are an expert AI video prompt engineer specializing in ${toolPreset.name}.
 
 ${toolKnowledgeSection}
+
+${versionSection}
 
 ## Tool prompt structure:
 Recommended element order: ${toolPreset.promptOrder.join(' → ')}
@@ -30,7 +39,7 @@ ${styleSection}
 ## Rules:
 - Transform each brief Korean/English scene description into a detailed, production-ready English prompt
 - Follow the tool's recommended prompt structure strictly
-- Apply best practices from the tool knowledge base
+- Apply best practices from the Tool Knowledge above (treat it as authoritative)
 - Avoid common mistakes listed in the knowledge base
 - Include: subject, action, environment, lighting, camera, mood, color grading, texture
 - Max prompt length: ${toolPreset.maxPromptLength} characters

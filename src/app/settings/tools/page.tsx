@@ -15,6 +15,7 @@ const TOOLS = getAllToolPresets().map((p) => ({ id: p.id, name: p.name }));
 interface ToolData {
   documents: KnowledgeDocument[];
   knowledge: ToolKnowledge | null;
+  builtin?: { available: boolean; length: number };
 }
 
 export default function ToolKnowledgePage() {
@@ -35,7 +36,11 @@ export default function ToolKnowledgePage() {
         const data = await res.json();
         setToolData((prev) => ({
           ...prev,
-          [tool.id]: { documents: data.documents || [], knowledge: data.knowledge || null },
+          [tool.id]: {
+            documents: data.documents || [],
+            knowledge: data.knowledge || null,
+            builtin: data.builtin,
+          },
         }));
       } catch { /* ignore */ }
     }
@@ -106,7 +111,14 @@ export default function ToolKnowledgePage() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-semibold">{tool.name}</h2>
-                <p className="text-xs text-text-tertiary">학습된 문서: {docCount}개</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <p className="text-xs text-text-tertiary">학습된 문서: {docCount}개</p>
+                  {data?.builtin?.available && (
+                    <span className="text-[10px] uppercase tracking-wider bg-accent-subtle text-accent px-1.5 py-0.5 rounded">
+                      내장 가이드 활성
+                    </span>
+                  )}
+                </div>
               </div>
               <Button
                 size="sm"

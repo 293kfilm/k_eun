@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { dbGet, dbRun } from '@/lib/db';
 import { getToolPreset } from '@/lib/presets';
+import { getBuiltinKnowledge } from '@/lib/builtinKnowledge';
 import { streamAI } from '@/lib/gemini';
 import { buildGenerateSystemPrompt, buildGenerateUserMessage } from '@/lib/prompts';
 import { nanoid } from 'nanoid';
@@ -25,6 +26,14 @@ export async function POST(request: NextRequest) {
       [toolId]
     );
 
+    // Prefer user-trained knowledge from DB. Fall back to bundled markdown guide
+    // shipped with the app so that prompts use the latest official guidance even
+    // when no documents have been uploaded via the Tool Knowledge UI.
+    const knowledgeSummary =
+      toolKnowledge?.knowledge_summary?.trim() ||
+      getBuiltinKnowledge(toolId) ||
+      null;
+
     let styleSummary: string | null = null;
     if (styleId) {
       const style = await dbGet<{ style_summary: string }>(
@@ -36,8 +45,9 @@ export async function POST(request: NextRequest) {
 
     const systemPrompt = buildGenerateSystemPrompt(
       preset,
-      toolKnowledge?.knowledge_summary ?? null,
-      styleSummary
+      knowledgeSummary,
+      styleSummary,
+      globalParams
     );
     const userMessage = buildGenerateUserMessage(cuts, globalParams);
 
