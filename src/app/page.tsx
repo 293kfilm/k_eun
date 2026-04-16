@@ -4,6 +4,7 @@ import { useGeneratorStore } from '@/store/useGeneratorStore';
 import { ToolSelector } from '@/components/generator/ToolSelector';
 import { StylePicker } from '@/components/generator/StylePicker';
 import { ParameterPanel } from '@/components/generator/ParameterPanel';
+import { StoryboardInput } from '@/components/generator/StoryboardInput';
 import { CutList } from '@/components/generator/CutList';
 import { ResultList } from '@/components/generator/ResultList';
 import { Button } from '@/components/ui/Button';
@@ -97,6 +98,7 @@ export default function GeneratorPage() {
       <ToolSelector />
       <StylePicker />
       <ParameterPanel />
+      <StoryboardInput />
       <CutList />
 
       <Button
