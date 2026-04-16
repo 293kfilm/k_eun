@@ -1,10 +1,11 @@
-import type { ToolPreset, CutInput } from '@/types';
+import type { ToolPreset, CutInput, ConsistencyLock } from '@/types';
 
 export function buildGenerateSystemPrompt(
   toolPreset: ToolPreset,
   knowledgeSummary: string | null,
   styleSummary: string | null,
-  globalParams?: Record<string, string | number>
+  globalParams?: Record<string, string | number>,
+  consistency?: ConsistencyLock
 ): string {
   const toolKnowledgeSection = knowledgeSummary
     ? `## Tool Knowledge (latest official prompt guide):\n${knowledgeSummary}`
@@ -71,6 +72,8 @@ ${toolPreset.examplePrompts.map((p, i) => `${i + 1}. ${p}`).join('\n')}
 
 ${styleSection}
 
+${buildConsistencySection(consistency)}
+
 ${negativeSection}
 
 ## Rules:
@@ -83,6 +86,23 @@ ${negativeSection}
 - Negative prompt: follow the Negative prompt baseline section above. Never leave it empty when the tool supports it.
 - CRITICAL: Maintain visual continuity across all cuts (consistent characters, setting, color palette, lighting)
 - Output ONLY valid JSON array: [{"cutNumber": number, "prompt": string, "negativePrompt": string}]`;
+}
+
+function buildConsistencySection(consistency?: ConsistencyLock): string {
+  if (!consistency) return '';
+  const parts: string[] = [];
+  if (consistency.characterSheet?.trim()) {
+    parts.push(`### Character Sheet (MUST appear consistently in every cut):
+${consistency.characterSheet.trim()}
+Every cut's prompt MUST describe this character with these exact visual attributes (age, hair, wardrobe, features). Do NOT change or omit any detail.`);
+  }
+  if (consistency.sceneAnchor?.trim()) {
+    parts.push(`### Scene Anchor (MUST appear consistently across all cuts):
+${consistency.sceneAnchor.trim()}
+Every cut takes place in this environment. Maintain the same location, weather, time-of-day, and color temperature. Camera may move but the world stays the same.`);
+  }
+  if (parts.length === 0) return '';
+  return `## Consistency Lock — Cross-cut visual identity\n${parts.join('\n\n')}`;
 }
 
 export function buildGenerateUserMessage(

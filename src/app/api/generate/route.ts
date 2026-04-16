@@ -11,7 +11,7 @@ import type { GenerateRequest } from '@/types';
 export async function POST(request: NextRequest) {
   try {
     const body: GenerateRequest = await request.json();
-    const { cuts, toolId, styleId, globalParams } = body;
+    const { cuts, toolId, styleId, globalParams, consistency } = body;
 
     if (!cuts?.length || !toolId) {
       return Response.json({ error: 'Missing required fields: cuts, toolId' }, { status: 400 });
@@ -56,7 +56,8 @@ export async function POST(request: NextRequest) {
       preset,
       knowledgeSummary,
       styleSummary,
-      globalParams
+      globalParams,
+      consistency
     );
     const userMessage = buildGenerateUserMessage(cuts, globalParams);
 

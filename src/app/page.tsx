@@ -4,6 +4,7 @@ import { useGeneratorStore } from '@/store/useGeneratorStore';
 import { ToolSelector } from '@/components/generator/ToolSelector';
 import { StylePicker } from '@/components/generator/StylePicker';
 import { ParameterPanel } from '@/components/generator/ParameterPanel';
+import { ConsistencyPanel } from '@/components/generator/ConsistencyPanel';
 import { StoryboardInput } from '@/components/generator/StoryboardInput';
 import { CutList } from '@/components/generator/CutList';
 import { ResultList } from '@/components/generator/ResultList';
@@ -11,7 +12,7 @@ import { Button } from '@/components/ui/Button';
 import { useCallback, useEffect } from 'react';
 
 export default function GeneratorPage() {
-  const { cuts, toolId, styleId, globalParams, isGenerating, setIsGenerating, setResults } =
+  const { cuts, toolId, styleId, globalParams, consistency, isGenerating, setIsGenerating, setResults } =
     useGeneratorStore();
 
   const handleGenerate = useCallback(async () => {
@@ -30,6 +31,9 @@ export default function GeneratorPage() {
           toolId,
           styleId: styleId || undefined,
           globalParams,
+          consistency: (consistency.characterSheet.trim() || consistency.sceneAnchor.trim())
+            ? consistency
+            : undefined,
         }),
       });
 
@@ -73,7 +77,7 @@ export default function GeneratorPage() {
     } finally {
       setIsGenerating(false);
     }
-  }, [cuts, toolId, styleId, globalParams, setIsGenerating, setResults]);
+  }, [cuts, toolId, styleId, globalParams, consistency, setIsGenerating, setResults]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -98,6 +102,7 @@ export default function GeneratorPage() {
       <ToolSelector />
       <StylePicker />
       <ParameterPanel />
+      <ConsistencyPanel />
       <StoryboardInput />
       <CutList />
 

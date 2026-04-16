@@ -8,6 +8,13 @@ interface CutItem {
   params?: Record<string, string | number>;
 }
 
+interface ConsistencyLock {
+  /** Free-form character description (appearance, wardrobe, features) */
+  characterSheet: string;
+  /** Free-form scene/environment anchor (location, weather, time, props) */
+  sceneAnchor: string;
+}
+
 interface GeneratorState {
   toolId: string;
   styleId: string;
@@ -15,6 +22,7 @@ interface GeneratorState {
   results: GeneratedResult[];
   isGenerating: boolean;
   globalParams: Record<string, string | number>;
+  consistency: ConsistencyLock;
   setToolId: (id: string) => void;
   setStyleId: (id: string) => void;
   setCuts: (cuts: CutItem[]) => void;
@@ -26,11 +34,17 @@ interface GeneratorState {
   setIsGenerating: (v: boolean) => void;
   setGlobalParam: (key: string, value: string | number) => void;
   setGlobalParams: (params: Record<string, string | number>) => void;
+  setConsistency: (c: Partial<ConsistencyLock>) => void;
   reset: () => void;
 }
 
 let nextId = 1;
 const makeId = () => `cut-${nextId++}`;
+
+const EMPTY_CONSISTENCY: ConsistencyLock = {
+  characterSheet: '',
+  sceneAnchor: '',
+};
 
 export const useGeneratorStore = create<GeneratorState>((set) => ({
   toolId: 'kling',
@@ -39,6 +53,7 @@ export const useGeneratorStore = create<GeneratorState>((set) => ({
   results: [],
   isGenerating: false,
   globalParams: {},
+  consistency: { ...EMPTY_CONSISTENCY },
   setToolId: (toolId) => set({ toolId }),
   setStyleId: (styleId) => set({ styleId }),
   setCuts: (cuts) => set({ cuts }),
@@ -68,6 +83,10 @@ export const useGeneratorStore = create<GeneratorState>((set) => ({
       globalParams: { ...state.globalParams, [key]: value },
     })),
   setGlobalParams: (globalParams) => set({ globalParams }),
+  setConsistency: (partial) =>
+    set((state) => ({
+      consistency: { ...state.consistency, ...partial },
+    })),
   reset: () =>
     set({
       cuts: [{ id: makeId(), text: '' }],

@@ -99,9 +99,15 @@ export interface CutInput {
   params?: Record<string, string | number>;
 }
 
+export interface ConsistencyLock {
+  characterSheet: string;
+  sceneAnchor: string;
+}
+
 export interface GenerateRequest {
   cuts: CutInput[];
   toolId: string;
   styleId?: string;
   globalParams?: Record<string, string | number>;
+  consistency?: ConsistencyLock;
 }
