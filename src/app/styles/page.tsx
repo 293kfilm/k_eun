@@ -23,6 +23,14 @@ export default function StylesPage() {
   const [loading, setLoading] = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
+  // Extract style state
+  const [showExtract, setShowExtract] = useState(false);
+  const [extractDesc, setExtractDesc] = useState('');
+  const [extractName, setExtractName] = useState('');
+  const [extractLoading, setExtractLoading] = useState(false);
+  const [extractResult, setExtractResult] = useState<{ name: string; description: string; styleSummary: string } | null>(null);
+  const [extractSaving, setExtractSaving] = useState(false);
+
   const fetchStyles = useCallback(async () => {
     const res = await fetch('/api/styles');
     const data = await res.json();
@@ -112,6 +120,57 @@ export default function StylesPage() {
     fetchStyles();
   };
 
+  const handleExtract = async () => {
+    if (!extractDesc.trim()) return;
+    setExtractLoading(true);
+    setExtractResult(null);
+    try {
+      const res = await fetch('/api/styles/extract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          description: extractDesc.trim(),
+          name: extractName.trim() || undefined,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Extraction failed');
+      }
+      const data = await res.json();
+      setExtractResult(data);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '스타일 추출 실패');
+    } finally {
+      setExtractLoading(false);
+    }
+  };
+
+  const handleSaveExtracted = async () => {
+    if (!extractResult) return;
+    setExtractSaving(true);
+    try {
+      await fetch('/api/styles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: extractResult.name,
+          description: extractResult.description,
+          referencePrompts: [extractResult.styleSummary],
+        }),
+      });
+      setShowExtract(false);
+      setExtractDesc('');
+      setExtractName('');
+      setExtractResult(null);
+      fetchStyles();
+    } catch {
+      alert('저장 실패');
+    } finally {
+      setExtractSaving(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -121,9 +180,14 @@ export default function StylesPage() {
             자신만의 프롬프트 스타일을 등록하고 관리합니다
           </p>
         </div>
-        <Button onClick={() => { resetForm(); setShowModal(true); }}>
-          + 스타일 추가
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="secondary" onClick={() => { setShowExtract(true); setExtractResult(null); setExtractDesc(''); setExtractName(''); }}>
+            ✨ 스타일 추출
+          </Button>
+          <Button onClick={() => { resetForm(); setShowModal(true); }}>
+            + 스타일 추가
+          </Button>
+        </div>
       </div>
 
       {styles.length === 0 ? (
@@ -269,6 +333,76 @@ export default function StylesPage() {
           <Button className="w-full" onClick={handleSave} loading={loading}>
             {editingId ? '수정' : '저장 및 분석'}
           </Button>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={showExtract}
+        onClose={() => { setShowExtract(false); setExtractResult(null); }}
+        title="✨ 스타일 추출"
+      >
+        <div className="space-y-4">
+          <p className="text-xs text-text-tertiary">
+            영화, 감독, 분위기, 또는 원하는 비주얼을 자유롭게 묘사하면 AI가 스타일 가이드를 추출합니다.
+          </p>
+
+          <Input
+            label="스타일 이름 (선택)"
+            value={extractName}
+            onChange={(e) => setExtractName(e.target.value)}
+            placeholder="예: 비 오는 도시 느와르"
+          />
+
+          <div>
+            <label className="block text-xs uppercase tracking-wider text-text-secondary font-medium mb-1.5">
+              스타일 묘사
+            </label>
+            <textarea
+              value={extractDesc}
+              onChange={(e) => setExtractDesc(e.target.value)}
+              placeholder={`예시:\n• "왕가위 화양연화의 홍콩 느낌, 스텝프린팅, 따뜻한 네온"\n• "A24 호러 느낌인데 한국 시골 배경"\n• "90년대 한국 CF 느낌 + 트로트 + VHS"\n• "블레이드러너 + 서울 을지로 뒷골목"\n• "비 오는 밤, 네온사인, 택시 안에서 바라보는 도시 풍경"`}
+              rows={5}
+              className="w-full bg-bg-secondary border border-border rounded-lg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-tertiary focus:border-border-focus focus:outline-none resize-y transition-colors"
+            />
+          </div>
+
+          {!extractResult ? (
+            <Button
+              className="w-full"
+              onClick={handleExtract}
+              loading={extractLoading}
+              disabled={!extractDesc.trim()}
+            >
+              {extractLoading ? '추출 중...' : '스타일 추출하기'}
+            </Button>
+          ) : (
+            <>
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-text-secondary font-medium mb-1.5">
+                  추출된 스타일 가이드
+                </label>
+                <div className="bg-bg-tertiary rounded-lg p-3 text-sm text-text-secondary whitespace-pre-wrap max-h-[300px] overflow-y-auto border-l-2 border-accent/40">
+                  {extractResult.styleSummary}
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  className="flex-1"
+                  onClick={handleSaveExtracted}
+                  loading={extractSaving}
+                >
+                  내 스타일로 저장
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="flex-1"
+                  onClick={() => setExtractResult(null)}
+                >
+                  다시 추출
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </Modal>
     </div>
