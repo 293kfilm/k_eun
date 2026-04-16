@@ -12,6 +12,13 @@
       "default": "Seedance 2.0"
     },
     {
+      "key": "generation_mode",
+      "label": "Generation Mode",
+      "type": "select",
+      "options": ["text-to-video", "image-to-video", "omni"],
+      "default": "text-to-video"
+    },
+    {
       "key": "resolution",
       "label": "Resolution",
       "type": "select",

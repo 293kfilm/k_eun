@@ -21,6 +21,9 @@ export function buildGenerateSystemPrompt(
 The user has selected ${targetVersion} specifically. Locate the section of the Tool Knowledge that covers this version (or the closest one) and prioritize its conventions, supported features, and length recommendations. If the chosen version lacks a feature mentioned in the knowledge (e.g. native audio, dialogue, multi-shot), DO NOT use that feature in the generated prompt.`
     : '';
 
+  const generationMode = globalParams?.generation_mode ? String(globalParams.generation_mode) : null;
+  const modeSection = buildGenerationModeSection(toolPreset.id, generationMode);
+
   // Baseline negative-prompt guidance. These are universal AI-video failure
   // modes the user shouldn't have to remember every time. Specialize this list
   // when the tool's knowledge guide recommends additional negatives, but always
@@ -62,6 +65,8 @@ ${toolKnowledgeSection}
 
 ${versionSection}
 
+${modeSection}
+
 ## Tool prompt structure:
 Recommended element order: ${toolPreset.promptOrder.join(' → ')}
 Maximum prompt length: ${toolPreset.maxPromptLength} characters
@@ -86,6 +91,78 @@ ${negativeSection}
 - Negative prompt: follow the Negative prompt baseline section above. Never leave it empty when the tool supports it.
 - CRITICAL: Maintain visual continuity across all cuts (consistent characters, setting, color palette, lighting)
 - Output ONLY valid JSON array: [{"cutNumber": number, "prompt": string, "negativePrompt": string}]`;
+}
+
+function buildGenerationModeSection(toolId: string, mode: string | null): string {
+  if (!mode || mode === 'text-to-video') return '';
+
+  if (toolId === 'seedance' && mode === 'omni') {
+    return `## Generation Mode: Seedance Omni (Multimodal Reference)
+The user will provide reference images/videos/audio alongside their text prompt.
+Adapt the generated prompt for Seedance 2.0 Omni Reference mode:
+
+CRITICAL DIFFERENCES from text-to-video:
+1. Use @reference syntax: @image1, @image2... @video1... @audio1 to reference uploaded assets
+2. The prompt should DIRECT how to use references, not re-describe them
+   - BAD: "A woman with brown hair walks..." (re-describing the reference image)
+   - GOOD: "Using @image1 as the character, she walks through a rain-soaked alley..."
+3. Prompt structure for Omni:
+   - Character reference: "@image1 as the main character" (face/body consistency from image)
+   - Style reference: "@image2 as style reference" (color grade, mood, texture)
+   - Motion reference: "@video1 as motion reference" (camera movement, action pacing)
+   - Audio: "@audio1 as background music" (sync mood to audio)
+4. Max 9 reference images, 3 reference videos, 3 audio tracks
+5. Always specify WHICH reference asset controls WHAT aspect
+6. The text prompt focuses on ACTION, CAMERA, and TRANSITIONS — not on re-describing referenced visuals
+
+Output format stays the same: [{"cutNumber": number, "prompt": string, "negativePrompt": string}]
+But each prompt should include @reference directives where the user mentioned reference assets.
+If the user hasn't specified reference assets, write the prompt assuming they WILL attach them,
+using @image1 for character, @image2 for background/style as placeholders.`;
+  }
+
+  if (toolId === 'seedance' && mode === 'image-to-video') {
+    return `## Generation Mode: Seedance Image-to-Video
+The user will provide a starting frame image. Adapt prompts accordingly:
+- Do NOT re-describe the image's visual content (the model already sees it)
+- Focus the prompt on MOTION, ACTION, and CHANGE from the starting frame
+- Describe: what moves, camera movement, how the scene evolves over time
+- Example: "The woman slowly turns to face the camera, wind picks up her hair. Slow dolly in. Autumn leaves begin to fall."`;
+  }
+
+  if (toolId === 'kling' && mode === 'multi') {
+    return `## Generation Mode: Kling Multi-Shot
+Kling 3.0 Multi mode generates up to 6 connected shots in a single output.
+Adapt the generated prompts for native multi-shot format:
+
+CRITICAL DIFFERENCES from text-to-video:
+1. Structure each cut's prompt as a SEQUENCE of labeled shots:
+   [Shot 1]: Wide establishing shot — description...
+   [Shot 2]: Medium shot — description...
+   [Shot 3]: Close-up — description...
+   (up to 6 shots per cut)
+2. Each shot label must specify framing (wide/medium/close-up/detail)
+3. Maintain character and environment consistency WITHIN the multi-shot sequence
+4. Camera transitions between shots should be specified: "cut to", "dissolve to", "match cut"
+5. For dialogue, indicate speaker and tone:
+   [Shot 2]: Close-up of the woman. She says softly: "I missed you." (warm, trembling voice)
+6. Native audio is supported — include ambient sound and dialogue direction
+7. Keep total multi-shot prompt under 800 characters (Kling 3.0 allows longer prompts in multi mode)
+
+Output format: [{"cutNumber": number, "prompt": string, "negativePrompt": string}]
+where each prompt contains the [Shot N] labeled multi-shot sequence.`;
+  }
+
+  if (toolId === 'kling' && mode === 'image-to-video') {
+    return `## Generation Mode: Kling Image-to-Video
+The user will provide a starting frame image. Adapt prompts accordingly:
+- Do NOT re-describe the image's visual content (the model already sees it)
+- Focus on MOTION and CHANGE from the starting frame
+- Specify camera movement, subject action, and how the scene evolves
+- Example: "She begins to walk forward slowly, camera tracking from the side. Rain intensifies. Neon reflections ripple on the wet ground."`;
+  }
+
+  return '';
 }
 
 function buildConsistencySection(consistency?: ConsistencyLock): string {
