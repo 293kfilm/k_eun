@@ -136,6 +136,71 @@ Maximum information density per frame.`,
 Keep the world soft, lived-in, and emotionally generous.`,
   },
 
+  // ─────────── 장르: 웹툰/애니메이션 ───────────
+  {
+    id: 'webtoon-anime',
+    name: '웹툰 애니메이션',
+    emoji: '📖',
+    category: '장르',
+    description: '클린 셀셰이딩, 만화 패널 구도, 한국 웹툰→애니 톤',
+    keywords: ['cel-shade', 'manhwa', 'bold outline', 'clean color', 'anime'],
+    styleSummary: `Apply KOREAN WEBTOON → ANIME ADAPTATION aesthetic:
+- Clean cel-shading with 2–3 tone steps per surface (flat base + single shadow + highlight)
+- Bold black outlines on characters, thinner outlines on backgrounds
+- Vivid saturated palette typical of Korean manhwa: cherry blossom pink, electric sky blue, warm amber
+- Backgrounds: detailed painted style contrasting with flatter character shading (Korean webtoon convention)
+- Eyes large and expressive, hair with sharp color-blocked highlights
+- Camera: anime conventions — dramatic low-angle hero shots, extreme close-up reaction faces, speed lines for action
+- Motion: smooth limited-animation feel (12fps on 2s for dialogue, 24fps on 1s for action peaks)
+- Panel-like framing: characters sometimes cropped dramatically as if inside a webtoon panel
+- Light: strong rim light separating character from BG, often colored (pink/cyan/gold)
+- Sound design: J-pop/K-pop insert, swoosh SFX on action, sparkle SFX on emotional moments
+- Text effects: floating Korean onomatopoeia (쿵! 콰앙! 두근) as stylized graphic elements
+Maintain the bold readability of manhwa even in motion. Never muddy or overly realistic.`,
+  },
+  {
+    id: 'webtoon-action',
+    name: '웹툰 다크 액션',
+    emoji: '⚔️',
+    category: '장르',
+    description: '나 혼자만 레벨업/신의 탑 톤, 강렬한 이펙트, 다크 배경',
+    keywords: ['Solo Leveling', 'dark', 'VFX glow', 'power-up', '신의 탑'],
+    styleSummary: `Apply DARK ACTION MANHWA aesthetic (Solo Leveling, Tower of God, Omniscient Reader):
+- Dark moody backgrounds: pitch-black voids, ruined dungeons, crimson skies, digital glitch dimensions
+- Character lit by own power — glowing eyes, aura particles, energy weapons casting colored light
+- Cel-shaded but heavy shadow — deep blacks eating 40-60% of the frame
+- Accent colors: electric purple, blood crimson, neon cyan, molten gold — always against near-black
+- Speed lines, motion blur streaks, shattered-ground impact frames
+- Camera: extreme dynamic angles — worm's eye for power display, bird's eye for devastation
+- Particle effects: floating ember, energy crackle, dissolving monsters, skill activation circles
+- Character design: sharp angular features, glowing irises, battle-damaged clothing, flowing capes
+- Motion: snap animation — hold for 10 frames then burst of 1s-on-1s rapid action (manhwa page-turn feel)
+- Sound design: deep sub-bass impact, reverb sword slash, choir swell on power-up, silence before strike
+- Title card / skill name overlays in bold geometric Korean typography
+Maximum contrast. Every frame should feel like the climax splash page.`,
+  },
+  {
+    id: 'webtoon-romance',
+    name: '웹툰 로맨스',
+    emoji: '🌸',
+    category: '장르',
+    description: '여신강림/연애혁명 톤, 파스텔, 반짝이 이펙트, 감성 클로즈업',
+    keywords: ['pastel', 'sparkle', 'soft focus', 'blush', '소녀만화'],
+    styleSummary: `Apply ROMANCE MANHWA / SHOUJO aesthetic (True Beauty, Love Revolution, Lore Olympus):
+- Soft pastel palette: blush pink, lavender, cream, baby blue, champagne gold
+- Sparkle/glitter particle overlay on emotional moments (first meeting, confession, accidental touch)
+- Characters: large luminous eyes with multiple catch-lights, soft blush on cheeks, glossy lips
+- Cel-shading with soft edges (no hard shadow boundaries), almost watercolor blend at transitions
+- Backgrounds fade to abstract gradient or flower petals during emotional beats
+- Camera: gentle slow push-in on face during realization, over-shoulder POV for heart-flutter moments
+- Flower motifs: cherry blossoms falling, rose petals, dandelion seeds — floating constantly
+- Hair animation: flowing in slow-motion breeze even indoors (manhwa convention)
+- Lighting: permanent golden-hour or soft window backlight, lens flare on catch-light
+- Sound design: gentle piano, acoustic guitar, heartbeat SFX, tinkling chime on sparkle
+- Screen effects: soft vignette, slight Gaussian bloom on highlights, occasional screen-tone dot pattern
+Everything should feel like the most beautiful panel a reader screenshots to share.`,
+  },
+
   // ─────────── 감독 (Director) ───────────
   {
     id: 'wes-anderson',
@@ -197,6 +262,93 @@ Atmosphere always thicker than narrative.`,
 - Time itself as visual subject — clocks, mechanisms, tides, falling debris
 - Lighting: hard natural sun, blown highlights, true black shadows
 Every shot must feel like it cost something to capture.`,
+  },
+  {
+    id: 'james-cameron',
+    name: '제임스 카메론',
+    emoji: '🌊',
+    category: '감독',
+    description: '극한 스펙터클, 수중/SF, 블루-틸 그레이딩, 테크놀로지 + 감정',
+    keywords: ['spectacle', 'underwater', 'blue-teal', 'epic scale', 'Avatar'],
+    styleSummary: `Apply JAMES CAMERON aesthetic (Avatar, Titanic, Aliens, Terminator 2, The Abyss):
+- Epic scale with emotional center — spectacle always serves a human story
+- Signature blue-teal color grade: bioluminescent blue, deep ocean cyan, cold steel teal
+- Water as constant motif: underwater sequences, rain, condensation, ocean reflections
+- Lighting: volumetric beams through water/smoke/atmosphere, rim light on wet surfaces
+- Lens: anamorphic wides (24–35mm) for environment, punchy 50mm for emotional close-ups
+- Camera: sweeping crane and steadicam — fluid movement even in chaos
+- VFX integration so seamless it feels photographed — weight, gravity, physics always real
+- Production design: industrial-meets-organic, lived-in technology, bioluminescent alien flora
+- Wardrobe: military/industrial for humans, organic flowing forms for alien/nature elements
+- Sound design: James Horner / Simon Franglen orchestral + ethnic instruments, deep sub-bass rumble of machinery
+- Action: escalating set pieces with clear spatial geography, never confusing
+- Subjects: strong female leads, working-class heroes, military hardware, alien biology
+Spectacle should make the audience gasp, then the close-up should make them cry.`,
+  },
+  {
+    id: 'spielberg',
+    name: '스티븐 스필버그',
+    emoji: '✨',
+    category: '감독',
+    description: 'Janusz Kamiński 광질, 경이로운 얼굴 클로즈업, 골든 아메리카나',
+    keywords: ['wonder', 'golden', 'backlight', 'Americana', 'Kamiński'],
+    styleSummary: `Apply STEVEN SPIELBERG aesthetic (Jurassic Park, Schindler's List, E.T., Saving Private Ryan):
+- Janusz Kamiński lighting: strong backlight with blown-out windows, hazy diffused beams, visible dust/smoke
+- "Spielberg face" — reaction close-up of character seeing something wondrous, lit from below/in front by the wonder's light
+- Warm Americana palette: golden wheat, sunset amber, suburban green — punctuated by cold blue for danger
+- Lens: 21mm wide for reveal shots, 85mm telephoto for emotional isolation
+- Camera: signature push-in dolly on character's realization moment, slow and deliberate
+- Low-angle shots looking UP at the extraordinary (dinosaurs, UFOs, monuments)
+- Production design: believable middle-class American homes, period-accurate, never art-directed to death
+- Sound design: John Williams orchestral — soaring French horn for wonder, staccato strings for tension
+- Silhouette compositions: subjects against bright sky, headlights, or alien light
+- Children and families as emotional anchors — awe through the eyes of the young
+- Action: clear geography, Hitchcockian suspense (show the bomb), chase sequences with escalation
+Every frame should make the audience feel something — wonder, terror, or tenderness.`,
+  },
+  {
+    id: 'peter-jackson',
+    name: '피터 잭슨',
+    emoji: '🏔️',
+    category: '감독',
+    description: '스위핑 뉴질랜드 풍경, 판타지 스케일, 실사+VFX, 에픽 전투',
+    keywords: ['fantasy', 'NZ landscape', 'epic battle', 'WETA', 'LOTR'],
+    styleSummary: `Apply PETER JACKSON aesthetic (Lord of the Rings, The Hobbit, King Kong):
+- Sweeping New Zealand landscape as Middle-earth: alpine peaks, emerald valleys, misty forests, volcanic wasteland
+- MASSIVE scale contrast: tiny fellowship crossing vast terrain, armies stretching to horizon
+- Camera: helicopter/drone aerials swooping over mountains, then intimate handheld for battle chaos
+- Lens: ultra-wide (14–21mm) for landscape establishing, shift to 50mm for character beats
+- Color: rich naturalistic earth tones — forest green, mountain gray, Shire gold, Mordor ashen red
+- Lighting: diffused overcast for journey, golden magic-hour for hopeful beats, fiery orange for battle
+- Production design: WETA-level detail — every prop, weapon, armor piece has history and texture
+- Creature design: blend practical prosthetics with CG — orcs, trolls, dragons feel tactile and weighty
+- Wardrobe: layered medieval fantasy — leather, chain mail, elven silk, dwarven iron, weathered and travel-worn
+- Battle sequences: massive wide shots of formations, then visceral close combat, slow-mo hero moments
+- Sound design: Howard Shore epic brass + choir, Celtic folk for the Shire, industrial percussion for Mordor
+- Magic: subtle and earned — glowing runes, staff light, ring-world desaturation — never flashy
+The mundane world and the mythic world must feel equally real and lived-in.`,
+  },
+  {
+    id: 'david-yates',
+    name: '데이비드 예이츠',
+    emoji: '🪄',
+    category: '감독',
+    description: '다크 매지컬 리얼리즘, 안개+비, 음침한 영국 톤, 해리포터 후반부',
+    keywords: ['dark magic', 'fog', 'muted', 'British gothic', 'Wizarding World'],
+    styleSummary: `Apply DAVID YATES aesthetic (Harry Potter 5–8, Fantastic Beasts series):
+- Dark magical realism: magic is dangerous, atmospheric, and grounded in real physics
+- Heavily desaturated, almost monochromatic palette: slate gray, steel blue, cold green, muted brown
+- Occasional warm accent: candlelight amber, spell-glow gold, phoenix red — always small against the cold
+- Persistent atmospheric haze: fog, rain, mist, breath vapor, dust in stone corridors
+- Lighting: overcast English sky, dim practical torches/candles, wand-tip illumination in darkness
+- Camera: slow deliberate tracking, observational rather than flashy, handheld for emotional distress
+- Lens: 35–50mm naturalistic, slightly wide for gothic architecture establishing shots
+- Production design: weathered British gothic — stone castles, creaking wood, rain-streaked windows, overgrown courtyards
+- Creature/magic VFX: ethereal and translucent — patronuses, dementors, floating spells, smoke-like apparition
+- Wardrobe: dark robes, tweed suits, 1920s-40s vintage coats (Fantastic Beasts era), always slightly disheveled
+- Sound design: minimal score during tension (Alexandre Desplat restraint), environmental sounds amplified — dripping, wind, distant thunder
+- Mood: oppressive institutional weight, coming-of-age under threat, fascism allegory, moral complexity
+Beauty exists but it's always threatened. Light always costs something.`,
   },
   {
     id: 'park-chanwook',

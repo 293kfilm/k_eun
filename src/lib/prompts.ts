@@ -20,6 +20,41 @@ export function buildGenerateSystemPrompt(
 The user has selected ${targetVersion} specifically. Locate the section of the Tool Knowledge that covers this version (or the closest one) and prioritize its conventions, supported features, and length recommendations. If the chosen version lacks a feature mentioned in the knowledge (e.g. native audio, dialogue, multi-shot), DO NOT use that feature in the generated prompt.`
     : '';
 
+  // Baseline negative-prompt guidance. These are universal AI-video failure
+  // modes the user shouldn't have to remember every time. Specialize this list
+  // when the tool's knowledge guide recommends additional negatives, but always
+  // include these defaults whenever the tool supports a negative prompt.
+  const negativeSection = toolPreset.negativePromptSupport
+    ? `## Negative prompt baseline (ALWAYS include unless tool guide overrides):
+The negativePrompt field MUST always be populated when the tool supports it. Combine these universal anti-failure-mode tokens with any tool-specific negatives from the knowledge base above:
+
+UNIVERSAL DEFAULTS — anatomy:
+  deformed hands, extra fingers, missing fingers, fused fingers, mutated fingers,
+  malformed face, asymmetric eyes, crossed eyes, extra limbs, missing limbs,
+  bad anatomy, disfigured, mutated, unnatural body proportions
+
+UNIVERSAL DEFAULTS — quality:
+  blurry, low quality, low resolution, pixelated, jpeg artifacts, compression artifacts,
+  noise, oversaturated, underexposed, overexposed, washed out, banding
+
+UNIVERSAL DEFAULTS — text/branding:
+  text, watermark, logo, signature, subtitles, captions, glitched text,
+  fake letters, illegible writing, UI elements, timecode
+
+UNIVERSAL DEFAULTS — motion/temporal:
+  flickering, frame skipping, jittery motion, morphing faces, melting features,
+  duplicated frames, ghosting, motion artifacts
+
+CONDITIONAL — append only if relevant to the cut:
+  - If photoreal: cartoon, anime, illustration, 3d render, plastic skin, doll-like
+  - If anime/illustration: photoreal, 3d render, realistic skin pores
+  - If cinematic: amateur, vlog, smartphone, vertical phone footage (unless 9:16 requested)
+  - If indoor/intimate: harsh sunlight, blown highlights
+  - If product shot: hands intruding, fingerprints, dust on product
+
+Format: comma-separated tokens, lowercase, no full sentences. Keep under 400 characters.`
+    : `## Negative prompt: NOT supported by this tool. Set negativePrompt to "" in output.`;
+
   return `You are an expert AI video prompt engineer specializing in ${toolPreset.name}.
 
 ${toolKnowledgeSection}
@@ -36,6 +71,8 @@ ${toolPreset.examplePrompts.map((p, i) => `${i + 1}. ${p}`).join('\n')}
 
 ${styleSection}
 
+${negativeSection}
+
 ## Rules:
 - Transform each brief Korean/English scene description into a detailed, production-ready English prompt
 - Follow the tool's recommended prompt structure strictly
@@ -43,7 +80,7 @@ ${styleSection}
 - Avoid common mistakes listed in the knowledge base
 - Include: subject, action, environment, lighting, camera, mood, color grading, texture
 - Max prompt length: ${toolPreset.maxPromptLength} characters
-- Generate negative prompt if tool supports it
+- Negative prompt: follow the Negative prompt baseline section above. Never leave it empty when the tool supports it.
 - CRITICAL: Maintain visual continuity across all cuts (consistent characters, setting, color palette, lighting)
 - Output ONLY valid JSON array: [{"cutNumber": number, "prompt": string, "negativePrompt": string}]`;
 }
